@@ -22,16 +22,25 @@
         <div>Edit {$activeBlock.name}</div>
         <div class="close" on:click={handleEditClose}>Close</div>
     {:else}
+        <div class="blocks">
         {#each blockList as block, index (block.id)}
             <Block block={block} />
         {/each}
+        </div>
     {/if}
 </aside>
 
 <style>
     aside {
         background: #dddddd;
-        width: 400px;
+        width: 360px;
         height: 100%;
+        padding: 32px;
+        box-sizing: border-box;
+        background-color: white;
+        box-shadow: 2px 0 20px rgba(0,0,0,.1);
+        z-index: 1;
     }
+
+    .blocks {}
 </style>
