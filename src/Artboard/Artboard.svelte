@@ -9,7 +9,11 @@
     const handleDrop = (e) => {
         e.preventDefault();
         const block = JSON.parse(e.dataTransfer.getData('block'));
-        console.log(block);
+
+        // API create block...
+        console.log('create block', block);
+        const randomId = Math.random();
+        block.id = `${block.id}-${randomId}`;
 
         artboardBlocks.update((currentBlocks) => {
             const updatedBlocks = currentBlocks.slice();
@@ -24,39 +28,12 @@
             return e.detail.items;
         });
     };
+
     const handleDndFinalize = (e) => {
         artboardBlocks.update((currentBlocks) => {
             return e.detail.items;
         });
     };
-
-    // const handleBlockDrop = (event, index) => {
-    //     console.log('insert at', index);
-    //     event.dataTransfer.dropEffect = 'move';
-    //     const origin = parseInt(event.dataTransfer.getData('origin'));
-    //     const destination = index;
-    //
-    //     artboardBlocks.update((currentBlocks) => {
-    //         const updatedBlocks = currentBlocks.slice();
-    //
-    //         if (origin < destination) {
-    //             updatedBlocks.splice(destination + 1, 0, updatedBlocks[origin]);
-    //             updatedBlocks.splice(origin, 1);
-    //         } else {
-    //             updatedBlocks.splice(destination, 0, updatedBlocks[origin]);
-    //             updatedBlocks.splice(origin + 1, 1);
-    //         }
-    //
-    //         return updatedBlocks;
-    //     });
-    // };
-    //
-    // const handleBlockDragStart = (event, index) => {
-    //     console.log('start block', index);
-    //     event.dataTransfer.effectAllowed = 'move';
-    //     event.dataTransfer.dropEffect = 'move';
-    //     event.dataTransfer.setData('origin', index);
-    // };
 </script>
 
 <section>
@@ -70,7 +47,7 @@
     >
         {#each $artboardBlocks as block, index (block.id)}
             <div animate:flip={{ duration: flipDurationMs }}>
-                <Discriminator type={block.name} />
+                <Discriminator block={block} />
             </div>
         {/each}
     </div>
