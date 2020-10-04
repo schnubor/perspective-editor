@@ -21,6 +21,7 @@
         margin: 8px;
         box-sizing: border-box;
         cursor: move;
+        background-color: white;
     }
 
     .block:hover {

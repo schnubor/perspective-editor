@@ -6,7 +6,6 @@
 
     const handleClick = (event) => {
         event.stopPropagation();
-        console.log('click', block.type);
         activeBlock.update((currentActiveBlock) => {
             return block;
         });

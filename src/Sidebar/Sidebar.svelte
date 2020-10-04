@@ -5,6 +5,7 @@
     import { dndzone, TRIGGERS } from 'svelte-dnd-action';
 
     let shouldIgnoreDndEvents = false;
+    const dropTargetStyle = { outline: 'none' };
 
     let blockList = Object.keys(blockMap).map((block) => {
         return {
@@ -20,12 +21,10 @@
     };
 
     const handleDndConsider = (e) => {
-        console.warn(`got consider ${JSON.stringify(e.detail, null, 2)}`);
         const {trigger, id} = e.detail.info;
         if (trigger === TRIGGERS.DRAG_STARTED) {
-            console.warn(`copying ${id}`);
             const idx = blockList.findIndex(item => item.id === id);
-            const newId = `${id}_copy_${Math.round(Math.random()*100000)}`;
+            const newId = `${Math.round(Math.random()*100000)}`;
             e.detail.items.splice(idx, 0, {...blockList[idx], id: newId});
             blockList = e.detail.items;
             shouldIgnoreDndEvents = true;
@@ -38,7 +37,6 @@
         }
     }
     const handleDndFinalize = (e) => {
-        console.warn(`got finalize ${JSON.stringify(e.detail, null, 2)}`);
         if (!shouldIgnoreDndEvents) {
             blockList = e.detail.items;
         }
@@ -55,7 +53,7 @@
         <div class="close" on:click={handleEditClose}>Close</div>
     {:else}
         <div class="blocks">
-            <section use:dndzone={{items: blockList, dropFromOthersDisabled: true}} on:consider={handleDndConsider} on:finalize={handleDndFinalize}>
+            <section use:dndzone={{items: blockList, dropFromOthersDisabled: true, dropTargetStyle }} on:consider={handleDndConsider} on:finalize={handleDndFinalize}>
                 {#each blockList as block(block.id)}
                     <Block block={block} />
                 {/each}

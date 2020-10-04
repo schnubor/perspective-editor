@@ -5,43 +5,36 @@
     import Discriminator from './Discriminator/Discriminator.svelte';
 
     const flipDurationMs = 300;
-
-    const handleDrop = (e) => {
-        e.preventDefault();
-        const block = JSON.parse(e.dataTransfer.getData('block'));
-
-        // API create block...
-        console.log('create block', block);
-        const randomId = Math.random();
-        block.id = `${block.id}-${randomId}`;
-
-        artboardBlocks.update((currentBlocks) => {
-            const updatedBlocks = currentBlocks.slice();
-            updatedBlocks.push(block);
-
-            return updatedBlocks;
-        });
-    };
+    const dropTargetStyle = { outline: 'none' };
 
     const handleDndConsider = (e) => {
-        artboardBlocks.update((currentBlocks) => {
+        artboardBlocks.update(() => {
             return e.detail.items;
         });
     };
 
     const handleDndFinalize = (e) => {
-        artboardBlocks.update((currentBlocks) => {
+        artboardBlocks.update(() => {
             return e.detail.items;
         });
     };
+
+    const transformDraggedElement = (draggedEl, data, index) => {
+        draggedEl.innerHTML = '';
+
+        new Discriminator({
+            target: draggedEl,
+            props: {
+                block: data
+            }
+        });
+    }
 </script>
 
 <section>
     <div
         class="canvas"
-        on:drop={(event) => handleDrop(event)}
-        ondragover="return false"
-        use:dndzone={{ items: $artboardBlocks, flipDurationMs }}
+        use:dndzone={{ items: $artboardBlocks, flipDurationMs, transformDraggedElement, dropTargetStyle }}
         on:consider={handleDndConsider}
         on:finalize={handleDndFinalize}
     >
