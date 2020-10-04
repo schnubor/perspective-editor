@@ -3,6 +3,7 @@
     import blockMap from './../../Blocks/map';
 
     export let block;
+    export let preview;
 
     const handleClick = (event) => {
         event.stopPropagation();
@@ -12,6 +13,12 @@
     };
 </script>
 
-<div on:click={handleClick}>
+<div class:preview={preview} on:click={handleClick}>
     <svelte:component this={blockMap[block.name]} />
 </div>
+
+<style>
+    .preview {
+        border: 1px dashed #0076FF;
+    }
+</style>

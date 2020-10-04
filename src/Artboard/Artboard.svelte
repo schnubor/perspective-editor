@@ -25,6 +25,7 @@
         new Discriminator({
             target: draggedEl,
             props: {
+                preview: true,
                 block: data
             }
         });

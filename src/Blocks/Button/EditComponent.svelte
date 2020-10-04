@@ -15,5 +15,6 @@
         align-items: center;
         justify-content: center;
         color: white;
+        margin: 0;
     }
 </style>
