@@ -1,9 +1,11 @@
 <script>
     import Box from '../Box/Box.svelte';
+
+    export let text = 'Hallo I bims 1 Text';
 </script>
 
 <Box>
-    <div class="text" contenteditable="true">Hallo I bims 1 Text</div>
+    <div class="text" contenteditable="true">{text}</div>
 </Box>
 
 <style>

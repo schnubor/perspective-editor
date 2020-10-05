@@ -1,5 +1,7 @@
 <script>
     import Box from '../Box/Box.svelte';
+
+
 </script>
 
 <Box><button contenteditable="true">A Button</button></Box>

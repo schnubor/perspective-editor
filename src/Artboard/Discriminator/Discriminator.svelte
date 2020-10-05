@@ -1,9 +1,10 @@
 <script>
     import { activeBlock } from '../../stores/artboard';
-    import blockMap from './../../Blocks/map';
+    import blockList from './../../Blocks';
+    import find from 'lodash/find';
 
     export let block;
-    export let preview;
+    export let preview = false;
 
     const handleClick = (event) => {
         event.stopPropagation();
@@ -11,10 +12,12 @@
             return block;
         });
     };
+
+    const blockData = find( blockList, { name: block.name });
 </script>
 
 <div class:preview={preview} on:click={handleClick}>
-    <svelte:component this={blockMap[block.name]} />
+    <svelte:component this={blockData.component} />
 </div>
 
 <style>
